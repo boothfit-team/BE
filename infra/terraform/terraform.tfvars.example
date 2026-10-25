@@ -1,0 +1,12 @@
+aws_region = "ap-northeast-2"
+
+# Set these if the AWS account has no default VPC or if a specific public subnet is required.
+# vpc_id    = "vpc-xxxxxxxx"
+# subnet_id = "subnet-xxxxxxxx"
+
+# If an IAM OIDC provider for token.actions.githubusercontent.com already exists:
+# github_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"
+
+# Repository IDs in this default subject were checked for boothfit-team/BE.
+# Change only if GitHub OIDC settings report a different subject.
+# github_oidc_subject = "repo:boothfit-team@347638161/BE@1432841847:ref:refs/heads/main"
