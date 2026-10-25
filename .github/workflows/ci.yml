@@ -13,6 +13,35 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate pull request branch and issue
+        if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" = "dev" ]; then
+            exit 0
+          fi
+
+          if [ "$BASE_REF" != "dev" ]; then
+            echo "::error::Pull requests to main must come from dev. Feature work targets dev."
+            exit 1
+          fi
+
+          if [[ ! "$HEAD_REF" =~ ^(feat|fix|chore|docs|refactor|test)/([1-9][0-9]*)-[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "::error::Use a branch such as feat/123-reservation-api."
+            exit 1
+          fi
+
+          issue_number="${HEAD_REF#*/}"
+          issue_number="${issue_number%%-*}"
+          if [[ ! "$PR_BODY" =~ (Closes|Fixes|Resolves)[[:space:]]+\#${issue_number}([[:space:]]|$) ]]; then
+            echo "::error::Link issue #${issue_number} in the PR body with Closes #${issue_number}."
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
 
       - name: Detect Spring Boot Gradle project
