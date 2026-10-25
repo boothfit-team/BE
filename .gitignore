@@ -3,3 +3,11 @@ build/
 .idea/
 .vscode/
 *.iml
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+infra/terraform/backend.hcl
+crash.log
+.env

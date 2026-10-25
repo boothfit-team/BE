@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/boothfit
+    username: boothfit
+    password: ${POSTGRES_PASSWORD:boothfit-local}
+  flyway:
+    enabled: true
