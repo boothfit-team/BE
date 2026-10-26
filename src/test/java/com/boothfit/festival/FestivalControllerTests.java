@@ -103,6 +103,21 @@ class FestivalControllerTests {
         assertEquals(2, jdbcTemplate.queryForObject("SELECT COUNT(*) FROM festivals", Integer.class));
     }
 
+    @Test
+    void openApiDocumentsReadAndLocalCreateOperations() throws Exception {
+        HttpResponse<String> specification = get("/v3/api-docs");
+        HttpResponse<String> swaggerUi = get("/swagger-ui/index.html");
+
+        assertEquals(200, specification.statusCode());
+        assertTrue(specification.body().contains("\"/api/festivals\""));
+        assertTrue(specification.body().contains("\"/api/festivals/{id}\""));
+        assertTrue(specification.body().contains("\"get\""));
+        assertTrue(specification.body().contains("\"post\""));
+        assertTrue(specification.body().contains("\"201\""));
+        assertTrue(specification.body().contains("\"404\""));
+        assertEquals(200, swaggerUi.statusCode());
+    }
+
     private HttpResponse<String> get(String path) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + port + path))
