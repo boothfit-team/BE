@@ -26,6 +26,10 @@ macOS/Linux에서는 `./gradlew test bootJar`, `./gradlew bootRun --args='--spri
 
 IntelliJ에서 `BoothfitApplication`을 실행한다면 실행 구성의 환경 변수에 `SPRING_PROFILES_ACTIVE=local`을 넣고, 먼저 `docker compose up -d postgres`를 실행합니다. 기본 프로필에는 DB 접속 주소가 없어 앱을 시작할 수 없습니다.
 
+## 공개 API
+
+행사 목록 `GET /api/festivals`와 행사 상세 `GET /api/festivals/{id}`를 제공합니다. 로컬 검증용 행사 생성 `POST /api/festivals`는 `local`·`test` 프로필에서만 사용 가능합니다. 요청·응답 형식은 [API 명세](docs/api.md)를 참고하세요. 새 데이터베이스에는 행사 데이터가 자동으로 들어가지 않으므로, 등록 전 목록 응답은 빈 배열입니다.
+
 ## 협업과 CI
 
 작업 전 [협업 규칙](CONTRIBUTING.md)을 확인해 주세요. BE 이슈를 만들고 `dev`에서 작업 브랜치를 분기해 `dev`로 PR을 엽니다. 배포할 변경은 `dev`에서 `main`으로 PR을 엽니다.

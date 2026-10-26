@@ -30,4 +30,17 @@ class BoothfitApplicationTests {
         assertEquals(200, response.statusCode());
         assertTrue(response.body().contains("\"status\":\"UP\""));
     }
+
+    @Test
+    void festivalCreationIsUnavailableWithoutLocalOrTestProfile() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + port + "/api/festivals"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("{}"))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(405, response.statusCode());
+    }
 }
