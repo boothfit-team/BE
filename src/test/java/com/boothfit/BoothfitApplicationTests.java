@@ -43,4 +43,18 @@ class BoothfitApplicationTests {
 
         assertEquals(405, response.statusCode());
     }
+
+    @Test
+    void openApiOmitsLocalOnlyCreationWithoutLocalOrTestProfile() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + port + "/v3/api-docs"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().contains("\"/api/festivals\""));
+        assertTrue(!response.body().contains("\"post\":"));
+    }
 }

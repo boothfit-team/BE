@@ -1,6 +1,6 @@
 # BoothFit BE
 
-Java 21과 Spring Boot로 구성한 부스핏 백엔드입니다. 현재는 CI 검증을 위한 최소 앱이며 비즈니스 API는 아직 포함하지 않습니다.
+Java 21과 Spring Boot 4로 구성한 부스핏 백엔드입니다. 행사 목록·상세 조회 API와 로컬 검증용 행사 생성 API를 제공합니다.
 
 ## 현재 상태
 
@@ -8,9 +8,9 @@ Java 21·Spring Boot 4·Gradle과 로컬 PostgreSQL·Flyway 실행을 확인했�
 
 ## 패키지 구조
 
-`src/main/java/com/boothfit` 아래를 기능별로 나눕니다. `auth`는 인증·권한, `festival`은 행사, `booth`는 부스, `reservation`은 예약·충돌, `queue`는 현장 대기, `review`는 후기, `global`은 공통 설정·예외 처리입니다. 현재는 각 패키지의 `package-info.java`만 있으며 API나 DB 모델은 정의하지 않았습니다.
+`src/main/java/com/boothfit` 아래를 기능별로 나눕니다. `festival`에는 행사 조회·로컬 생성 API와 서비스·저장소가 구현되어 있습니다. `global`에는 OpenAPI 설정이 있습니다. `auth`, `booth`, `reservation`, `queue`, `review`는 앞으로 구현할 기능의 패키지입니다.
 
-기능 구현이 시작되면 해당 패키지에 필요한 Controller·Service·Repository·DTO를 추가합니다. DB 스키마 변경은 `src/main/resources/db/migration`의 Flyway SQL로 관리합니다.
+DB 스키마 변경은 `src/main/resources/db/migration`의 Flyway SQL로 관리하며, 현재 V1 마이그레이션이 행사와 운영일 테이블을 생성합니다.
 
 ## 로컬 실행
 
@@ -29,6 +29,8 @@ IntelliJ에서 `BoothfitApplication`을 실행한다면 실행 구성의 환경 
 ## 공개 API
 
 행사 목록 `GET /api/festivals`와 행사 상세 `GET /api/festivals/{id}`를 제공합니다. 로컬 검증용 행사 생성 `POST /api/festivals`는 `local`·`test` 프로필에서만 사용 가능합니다. 요청·응답 형식은 [API 명세](docs/api.md)를 참고하세요. 새 데이터베이스에는 행사 데이터가 자동으로 들어가지 않으므로, 등록 전 목록 응답은 빈 배열입니다.
+
+실행 후 [Swagger UI](http://localhost:8080/swagger-ui.html)에서 API 문서를 보고 요청을 직접 실행할 수 있습니다. OpenAPI JSON은 `http://localhost:8080/v3/api-docs`에 있습니다. `local` 프로필에서는 행사 생성 POST도 표시되며, `prod` 프로필에서는 공개 조회 GET만 표시됩니다.
 
 ## 협업과 CI
 

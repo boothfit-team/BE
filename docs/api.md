@@ -2,6 +2,8 @@
 
 인증 없이 행사 정보를 읽는 API입니다. 응답의 날짜는 `YYYY-MM-DD`, 시간은 `HH:mm:ss` 형식입니다. 운영 날짜는 오름차순으로 반환합니다.
 
+실행 중인 서버의 Swagger UI는 `http://localhost:8080/swagger-ui.html`, OpenAPI JSON은 `http://localhost:8080/v3/api-docs`에서 확인할 수 있습니다. 로컬·테스트 프로필에서만 아래의 행사 생성 POST가 문서에 표시됩니다.
+
 ## 행사 목록
 
 `GET /api/festivals`
@@ -40,7 +42,7 @@
 
 ## 데이터 준비
 
-Flyway의 `V1__create_festivals.sql`이 `festivals`와 `festival_operating_days` 테이블을 생성합니다. 마이그레이션은 시연 데이터를 자동 삽입하지 않습니다. 행사 등록 API가 추가되기 전에는 로컬 PostgreSQL에 SQL로 행사와 운영일을 넣어 조회할 수 있습니다.
+Flyway의 `V1__create_festivals.sql`이 `festivals`와 `festival_operating_days` 테이블을 생성합니다. 마이그레이션은 시연 데이터를 자동 삽입하지 않습니다. 로컬에서는 아래의 POST 또는 SQL로 행사와 운영일을 넣어 조회할 수 있습니다.
 
 아래는 로컬 시연 데이터 입력 예시입니다. 실제 행사 정보가 아닙니다.
 
